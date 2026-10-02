@@ -3,8 +3,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import type { Dataset, Opportunity, OpportunityType } from "../types";
 import { OpportunityCard } from "./OpportunityCard";
-import { ProfileSideSection } from "./ProfileSideSection";
-import { matchOpportunityForVansh, VANSH_PROFILE } from "../data/vanshProfile";
 
 interface Props {
   initialData: Dataset;
@@ -19,8 +17,6 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [onlyRemote, setOnlyRemote] = useState(false);
   const [onlyFresh, setOnlyFresh] = useState(false);
-  const [onlyVanshMatches, setOnlyVanshMatches] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [sortBy, setSortBy] = useState<"newest" | "deadline" | "alpha">("newest");
   const [page, setPage] = useState(1);
   const [rssCopied, setRssCopied] = useState(false);
@@ -50,12 +46,7 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
   // Reset to page 1 whenever filters change
   useEffect(() => {
     setPage(1);
-  }, [search, selectedType, selectedRegion, onlyRemote, onlyFresh, onlyVanshMatches, sortBy]);
-
-  // Count of matched opportunities for Vansh
-  const vanshMatchesCount = useMemo(() => {
-    return data.opportunities.filter((o) => matchOpportunityForVansh(o).isMatch).length;
-  }, [data.opportunities]);
+  }, [search, selectedType, selectedRegion, onlyRemote, onlyFresh, sortBy]);
 
   // Unique regions list from dataset
   const availableRegions = useMemo(() => {
@@ -69,11 +60,6 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
   // Filtered and sorted opportunities
   const filtered = useMemo(() => {
     let list = data.opportunities;
-
-    // Filter by Vansh's CV match
-    if (onlyVanshMatches) {
-      list = list.filter((o) => matchOpportunityForVansh(o).isMatch);
-    }
 
     // Filter by Type
     if (selectedType !== "all") {
@@ -189,18 +175,6 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
           >
             <span>📡</span>
             <span>{rssCopied ? "Feed URL Copied!" : "RSS Alerts"}</span>
-          </button>
-
-          <button
-            onClick={() => setIsProfileOpen(true)}
-            className="flex items-center gap-2 rounded-full border border-indigo-500/40 bg-indigo-950/60 px-3.5 py-1.5 text-xs font-semibold text-indigo-300 hover:border-indigo-400 hover:bg-indigo-900/80 transition-all shadow-md shadow-indigo-950/40"
-          >
-            <span>👤</span>
-            <span>Vansh's CV Matches ({vanshMatchesCount})</span>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
-            </span>
           </button>
 
           <button
@@ -410,18 +384,6 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
 
           <div className="flex flex-wrap items-center gap-2">
             <button
-              onClick={() => setOnlyVanshMatches(!onlyVanshMatches)}
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-semibold transition-all ${
-                onlyVanshMatches
-                  ? "border-indigo-500 bg-indigo-500/20 text-indigo-300 ring-1 ring-indigo-500"
-                  : "border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              <span>🎯</span>
-              <span>Matched for Vansh ({vanshMatchesCount})</span>
-            </button>
-
-            <button
               onClick={() => setOnlyFresh(!onlyFresh)}
               className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-semibold transition-all ${
                 onlyFresh
@@ -526,31 +488,6 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
           to receive early notifications the moment an application opens.
         </p>
       </footer>
-
-      {/* Vansh's Profile & Matched Opportunities Side Section */}
-      <ProfileSideSection
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-        allOpportunities={data.opportunities}
-        onApplyProfileFilterToBoard={() => setOnlyVanshMatches(!onlyVanshMatches)}
-        isProfileFilterActiveOnBoard={onlyVanshMatches}
-      />
-
-      {/* Floating launcher button for Vansh's CV matches */}
-      {!isProfileOpen && (
-        <button
-          onClick={() => setIsProfileOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 px-4 py-2.5 text-xs font-bold text-white shadow-xl shadow-indigo-600/30 hover:scale-105 hover:shadow-cyan-500/40 transition-all border border-indigo-400/30"
-          title="Open Vansh's Matched Opportunities & CV Profile"
-        >
-          <span>👤</span>
-          <span>Vansh's CV Matches ({vanshMatchesCount})</span>
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-          </span>
-        </button>
-      )}
     </div>
   );
 };

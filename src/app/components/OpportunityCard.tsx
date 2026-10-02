@@ -3,8 +3,6 @@
 import React from "react";
 import type { Opportunity, OpportunityType } from "../types";
 
-import { matchOpportunityForVansh } from "../data/vanshProfile";
-
 interface Props {
   opportunity: Opportunity;
 }
@@ -78,8 +76,6 @@ export const OpportunityCard: React.FC<Props> = ({ opportunity }) => {
     opportunity.firstSeen &&
     Date.now() - new Date(opportunity.firstSeen).getTime() < 72 * 60 * 60 * 1000;
 
-  const vanshMatch = matchOpportunityForVansh(opportunity);
-
   return (
     <div className="group relative flex flex-col justify-between rounded-xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-700 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-cyan-950/20">
       {/* Top row: Type + Fresh Badge + Deadline */}
@@ -97,13 +93,6 @@ export const OpportunityCard: React.FC<Props> = ({ opportunity }) => {
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-bold text-emerald-400">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
                 NEW
-              </span>
-            )}
-
-            {vanshMatch.isMatch && (
-              <span className="inline-flex items-center gap-1 rounded-full border border-indigo-500/40 bg-indigo-500/15 px-2 py-0.5 text-[11px] font-semibold text-indigo-300">
-                <span>🎯</span>
-                <span className="truncate max-w-[110px]">{vanshMatch.reasons[0] || "Profile Fit"}</span>
               </span>
             )}
           </div>
