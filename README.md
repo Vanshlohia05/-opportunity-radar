@@ -1,5 +1,9 @@
 # 📡 OpportunityRadar
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://vanshlohia05.github.io/-opportunity-radar/)
+[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%203%20Hours-blue?style=for-the-badge&logo=github-actions)](https://github.com/Vanshlohia05/-opportunity-radar/actions)
+
+> 🌐 **Live Website**: [https://vanshlohia05.github.io/-opportunity-radar/](https://vanshlohia05.github.io/-opportunity-radar/)  
 > **Catch fresh internships, fellowships, apprenticeships & scholarships before the crowd.**  
 > Continuously crawls raw sources, monitors early-signal discussion boards, and auto-updates every 3 hours.
 
@@ -28,8 +32,8 @@ Every opportunity's canonical URL is fingerprinted. The engine records a persist
 
 ### 1. Installation
 ```bash
-git clone https://github.com/your-username/opportunity-radar.git
-cd opportunity-radar
+git clone https://github.com/Vanshlohia05/-opportunity-radar.git
+cd -opportunity-radar
 npm install
 ```
 
