@@ -209,6 +209,17 @@ export const OpportunityBoard: React.FC<Props> = ({ initialData }) => {
           >
             <span>ℹ️ Sources ({data.meta?.sources?.length || 0})</span>
           </button>
+
+          <a
+            href="https://github.com/Vanshlohia05/-opportunity-radar"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-full border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-300 hover:border-slate-600 hover:text-white transition-colors"
+            title="View Open Source Repository on GitHub"
+          >
+            <span>⭐</span>
+            <span>GitHub</span>
+          </a>
         </div>
       </header>
 
