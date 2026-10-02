@@ -1,0 +1,49 @@
+name: Auto-Update Opportunities
+
+on:
+  schedule:
+    # Runs every 3 hours at minute 15
+    - cron: "15 */3 * * *"
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - "data/**"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    name: Crawl & Refresh Opportunities
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Harvest Opportunities Across All Sources
+        run: node scripts/fetch.mjs
+        env:
+          USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+          USAJOBS_EMAIL: ${{ secrets.USAJOBS_EMAIL }}
+
+      - name: Commit and Push Updated Dataset
+        run: |
+          git config user.name "OpportunityRadar Bot"
+          git config user.email "bot@opportunityradar.internal"
+          git add public/data/opportunities.json public/feed.xml
+          if git diff --staged --quiet; then
+            echo "No new changes to commit."
+          else
+            git commit -m "chore(data): auto-update opportunities & RSS feed [skip ci]"
+            git push
+          fi

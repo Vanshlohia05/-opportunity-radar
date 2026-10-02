@@ -1,0 +1,48 @@
+{
+  "ttlDays": 45,
+  "maxItems": 4000,
+  "rss": [
+    {
+      "id": "opportunitydesk",
+      "name": "Opportunity Desk",
+      "url": "https://opportunitydesk.org/feed/",
+      "homeUrl": "https://opportunitydesk.org",
+      "region": null
+    },
+    {
+      "id": "scholars4dev",
+      "name": "Scholarships for Development",
+      "url": "https://www.scholars4dev.com/feed/",
+      "homeUrl": "https://www.scholars4dev.com",
+      "region": null
+    },
+    {
+      "id": "afterschoolafrica",
+      "name": "After School Africa",
+      "url": "https://www.afterschoolafrica.com/feed/",
+      "homeUrl": "https://www.afterschoolafrica.com",
+      "region": null
+    },
+    {
+      "id": "scholarshippositions",
+      "name": "Scholarship Positions",
+      "url": "https://scholarship-positions.com/feed/",
+      "homeUrl": "https://scholarship-positions.com",
+      "region": null
+    },
+    {
+      "id": "opportunitiesforafricans",
+      "name": "Opportunities For Africans",
+      "url": "https://www.opportunitiesforafricans.com/feed/",
+      "homeUrl": "https://www.opportunitiesforafricans.com",
+      "region": null
+    },
+    {
+      "id": "scholarshipscorner",
+      "name": "Scholarships Corner",
+      "url": "https://scholarshipscorner.website/feed/",
+      "homeUrl": "https://scholarshipscorner.website",
+      "region": null
+    }
+  ]
+}
